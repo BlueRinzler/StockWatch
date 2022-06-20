@@ -1,8 +1,10 @@
 package com.sambarnett.stockwatch.data.repository
 
+import com.sambarnett.stockwatch.data.csv.CSVParser
 import com.sambarnett.stockwatch.data.local.StockDao
 import com.sambarnett.stockwatch.data.local.StockDatabase
 import com.sambarnett.stockwatch.data.mapper.toCompanyListing
+import com.sambarnett.stockwatch.data.mapper.toCompanyListingEntity
 import com.sambarnett.stockwatch.data.network.StockAPI
 import com.sambarnett.stockwatch.domain.model.CompanyListing
 import com.sambarnett.stockwatch.domain.repository.StockRepository
@@ -14,8 +16,9 @@ import retrofit2.HttpException
 
 
 class StockRepositoryImpl(
-    val api: StockAPI,
-    val database: StockDatabase
+    private val api: StockAPI,
+    private val database: StockDatabase,
+    private val companyListingParser: CSVParser<CompanyListing>
 ) : StockRepository {
 
     private val stockDao = database.stockDao
@@ -34,20 +37,34 @@ class StockRepositoryImpl(
 
             val isDbEmpty = localListings.isEmpty() && query.isBlank()
             val loadFromCache = !isDbEmpty && !fetchFromRemote
-            if(loadFromCache) {
+            if (loadFromCache) {
                 emit(Resource.Loading(false))
                 return@flow
             }
             val remoteListings = try {
                 val response = api.getListings()
-                response.byteStream()
-
+                companyListingParser.parse(response.byteStream())
             } catch (e: IOException) {
                 e.printStackTrace()
                 emit(Resource.Error("Couldn't load data"))
+                null
             } catch (e: HttpException) {
                 e.printStackTrace()
                 emit(Resource.Error("Couldn't load data"))
+                null
+            }
+
+            remoteListings?.let { listings ->
+                stockDao.clearCompanyListings()
+                stockDao.insertCompanyListings(
+                    listings.map { it.toCompanyListingEntity() }
+                )
+                emit(Resource.Success(
+                    data = stockDao
+                        .searchCompanyListing("")
+                        .map { it.toCompanyListing() }
+                ))
+                emit(Resource.Loading(false))
             }
 
         }

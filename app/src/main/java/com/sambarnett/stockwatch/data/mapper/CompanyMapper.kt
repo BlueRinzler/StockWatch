@@ -16,6 +16,5 @@ fun CompanyListing.toCompanyListingEntity(): CompanyListingsEntity {
         name = name,
         symbol = symbol,
         exchange = exchange
-
     )
 }

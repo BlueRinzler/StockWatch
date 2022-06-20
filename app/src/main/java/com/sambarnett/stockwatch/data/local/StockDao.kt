@@ -1,9 +1,7 @@
 package com.sambarnett.stockwatch.data.local
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 
 @Dao
@@ -11,7 +9,7 @@ interface StockDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCompanyListings(
-        companyListingsEntities: List<CompanyListingsEntity>
+        companyListingEntities: List<CompanyListingsEntity>
     )
 
     @Query("DELETE FROM companyListingsEntity")
@@ -19,12 +17,13 @@ interface StockDao {
 
     @Query(
         """
-        SELECT * 
-        FROM companyListingsEntity 
-        WHERE LOWER(name) LIKE '%' || LOWER(:query) || '%'
-        OR UPPER(:query) == symbol
-    """
+            SELECT * 
+            FROM companyListingsEntity
+            WHERE LOWER(stockName) LIKE '%' || LOWER(:query) || '%' OR
+                UPPER(:query) == symbolName
+        """
     )
     suspend fun searchCompanyListing(query: String): List<CompanyListingsEntity>
+
 
 }

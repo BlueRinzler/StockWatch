@@ -1,6 +1,6 @@
 package com.sambarnett.stockwatch.data.network
 
-import androidx.room.Query
+import retrofit2.http.Query
 import okhttp3.ResponseBody
 import retrofit2.http.GET
 
