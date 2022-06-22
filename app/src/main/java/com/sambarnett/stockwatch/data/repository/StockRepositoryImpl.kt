@@ -1,8 +1,7 @@
 package com.sambarnett.stockwatch.data.repository
 
 import com.sambarnett.stockwatch.data.csv.CSVParser
-import com.sambarnett.stockwatch.data.local.StockDao
-import com.sambarnett.stockwatch.data.local.StockDatabase
+import com.sambarnett.stockwatch.data.database.StockDatabase
 import com.sambarnett.stockwatch.data.mapper.toCompanyListing
 import com.sambarnett.stockwatch.data.mapper.toCompanyListingEntity
 import com.sambarnett.stockwatch.data.network.StockAPI

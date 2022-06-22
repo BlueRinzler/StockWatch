@@ -1,19 +1,18 @@
-package com.sambarnett.stockwatch.data.local
+package com.sambarnett.stockwatch.data.database
 
 import androidx.room.*
-import kotlinx.coroutines.flow.Flow
 
 
 @Dao
 interface StockDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCompanyListings(
+    fun insertCompanyListings(
         companyListingEntities: List<CompanyListingsEntity>
     )
 
     @Query("DELETE FROM companyListingsEntity")
-    suspend fun clearCompanyListings()
+    fun clearCompanyListings()
 
     @Query(
         """
@@ -23,7 +22,7 @@ interface StockDao {
                 UPPER(:query) == symbolName
         """
     )
-    suspend fun searchCompanyListing(query: String): List<CompanyListingsEntity>
+    fun searchCompanyListing(query: String): List<CompanyListingsEntity>
 
 
 }

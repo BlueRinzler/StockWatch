@@ -1,4 +1,4 @@
-package com.sambarnett.stockwatch.data.local
+package com.sambarnett.stockwatch.data.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

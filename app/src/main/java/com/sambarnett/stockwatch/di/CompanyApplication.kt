@@ -8,13 +8,13 @@ import org.koin.core.context.stopKoin
 
 class CompanyApplication: Application() {
 
+
     override fun onCreate() {
         super.onCreate()
         startKoin {
             androidLogger()
             androidContext(this@CompanyApplication)
-            modules(apiModule, dataBaseModule, repoModule, csvParser, viewModels)
-
+            modules(repoModule, viewModels, apiModule, dataBaseModule, csvParser)
         }
     }
 

@@ -1,6 +1,6 @@
 package com.sambarnett.stockwatch.data.mapper
 
-import com.sambarnett.stockwatch.data.local.CompanyListingsEntity
+import com.sambarnett.stockwatch.data.database.CompanyListingsEntity
 import com.sambarnett.stockwatch.domain.model.CompanyListing
 
 fun CompanyListingsEntity.toCompanyListing(): CompanyListing {

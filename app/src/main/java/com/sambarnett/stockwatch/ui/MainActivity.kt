@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         NavigationUI.setupActionBarWithNavController(this, navController)
     }
 
+
     /**
      * Handle navigation when the user chooses Up from the action bar.
      */

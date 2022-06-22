@@ -12,7 +12,9 @@ import com.sambarnett.stockwatch.domain.model.CompanyListing
 /**
  * Adapter for the [RecyclerView] in person_list_fragment. Displays Person data object.
  */
-class CompanyListAdapter(private val onCompanyClicked: (CompanyListing) -> Unit) :
+
+//(private val onCompanyClicked: (CompanyListing) -> Unit)
+class CompanyListAdapter :
     ListAdapter<CompanyListing, CompanyListAdapter.CompanyViewHolder>(DiffCallback) {
 
 
@@ -25,9 +27,9 @@ class CompanyListAdapter(private val onCompanyClicked: (CompanyListing) -> Unit)
 
     override fun onBindViewHolder(holder: CompanyViewHolder, postion: Int) {
         val current = getItem(postion)
-        holder.itemView.setOnClickListener {
-            onCompanyClicked(current)
-        }
+//        holder.itemView.setOnClickListener {
+//            onCompanyClicked(current)
+//        }
         holder.bind(current)
     }
 

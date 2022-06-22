@@ -1,4 +1,4 @@
-package com.sambarnett.stockwatch.companyListView
+package com.sambarnett.stockwatch.ui.companyListView
 
 
 import androidx.lifecycle.ViewModel

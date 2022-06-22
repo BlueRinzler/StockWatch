@@ -1,11 +1,9 @@
 package com.sambarnett.stockwatch.di
 
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import com.sambarnett.stockwatch.companyListView.CompanyListingsViewModel
-import com.sambarnett.stockwatch.data.csv.CSVParser
+import com.sambarnett.stockwatch.ui.companyListView.CompanyListingsViewModel
 import com.sambarnett.stockwatch.data.csv.ListingsParser
-import com.sambarnett.stockwatch.data.local.StockDatabase
+import com.sambarnett.stockwatch.data.database.StockDatabase
 import com.sambarnett.stockwatch.data.network.StockAPI
 import com.sambarnett.stockwatch.data.repository.StockRepositoryImpl
 import org.koin.android.ext.koin.androidApplication
@@ -13,8 +11,6 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.create
-import kotlin.math.sin
 
 
 val apiModule = module {
@@ -39,6 +35,7 @@ val dataBaseModule = module {
             .fallbackToDestructiveMigration()
             .build()
     }
+
 }
 
 val csvParser = module {
