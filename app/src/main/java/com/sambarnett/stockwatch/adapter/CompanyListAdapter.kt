@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.sambarnett.stockwatch.databinding.CompanyListCompanyBinding
 import com.sambarnett.stockwatch.databinding.FragmentCompanyListBinding
 import com.sambarnett.stockwatch.domain.model.CompanyListing
 
@@ -21,7 +22,7 @@ class CompanyListAdapter :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
             CompanyViewHolder {
         return CompanyViewHolder(
-            FragmentCompanyListBinding.inflate(LayoutInflater.from(parent.context))
+            CompanyListCompanyBinding.inflate(LayoutInflater.from(parent.context))
         )
     }
 
@@ -30,20 +31,22 @@ class CompanyListAdapter :
 //        holder.itemView.setOnClickListener {
 //            onCompanyClicked(current)
 //        }
-        holder.bind(current)
+        if (current != null) {
+            holder.bind(current)
+        }
     }
 
 
     //Creating a holder for each data object. First name, sur name, age and weight.
-    class CompanyViewHolder(private var binding: FragmentCompanyListBinding) :
+    class CompanyViewHolder(private var binding: CompanyListCompanyBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         //binding Person data to PersonListPerson UI values
         fun bind(company: CompanyListing) {
             binding.apply {
-                company.name
-                company.exchange
-                company.symbol
+                companyListName.text = company.name
+                companyExchangeName.text = company.exchange
+                companySymbolName.text = company.symbol
             }
         }
 

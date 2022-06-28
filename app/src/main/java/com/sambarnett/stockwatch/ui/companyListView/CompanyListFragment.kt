@@ -5,29 +5,29 @@ import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sambarnett.stockwatch.adapter.CompanyListAdapter
 import com.sambarnett.stockwatch.databinding.FragmentCompanyListBinding
-import com.sambarnett.stockwatch.util.Resource
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
-
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
 /**
  * This is the first fragment displaying company details for all companies in the database.
  */
-class CompanyListFragment : Fragment() {
 
+@AndroidEntryPoint
+class CompanyListFragment : Fragment() {
 
     private var _binding: FragmentCompanyListBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: CompanyListingsViewModel by viewModel()
+    private val viewModel: CompanyListingsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,11 +47,17 @@ class CompanyListFragment : Fragment() {
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                val companies = state.value.companies
+                adapter.submitList(companies)
+
+            }
+        }
 
     }
 
 }
-
 
 //    private fun initView() {
 //        val state = viewModel.uiState

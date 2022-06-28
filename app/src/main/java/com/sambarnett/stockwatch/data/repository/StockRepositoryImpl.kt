@@ -12,9 +12,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okio.IOException
 import retrofit2.HttpException
+import javax.inject.Inject
+import javax.inject.Singleton
 
-
-class StockRepositoryImpl(
+@Singleton
+class StockRepositoryImpl @Inject constructor(
     private val api: StockAPI,
     private val database: StockDatabase,
     private val companyListingParser: CSVParser<CompanyListing>

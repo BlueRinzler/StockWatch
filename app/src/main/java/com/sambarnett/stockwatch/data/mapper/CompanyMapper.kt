@@ -5,7 +5,8 @@ import com.sambarnett.stockwatch.domain.model.CompanyListing
 
 
 /**
- * Interface for the Listings Parser. Takes type T generic for separation if CSV parser changes
+ * Mapper to turn Entity to Listing and vice versa
+ * Use for seperation purposesw
  */
 fun CompanyListingsEntity.toCompanyListing(): CompanyListing {
     return CompanyListing(

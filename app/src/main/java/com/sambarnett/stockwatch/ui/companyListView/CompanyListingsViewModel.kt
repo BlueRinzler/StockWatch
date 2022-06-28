@@ -6,12 +6,18 @@ import androidx.lifecycle.viewModelScope
 import com.sambarnett.stockwatch.domain.model.CompanyListing
 import com.sambarnett.stockwatch.domain.repository.StockRepository
 import com.sambarnett.stockwatch.util.Resource
+import dagger.hilt.android.HiltAndroidApp
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import org.koin.core.KoinApplication.Companion.init
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class CompanyListingsViewModel(private val stockRepository: StockRepository) : ViewModel() {
+@HiltViewModel
+class CompanyListingsViewModel @Inject constructor(private val stockRepository: StockRepository) : ViewModel() {
 
 
     private val _uiState = MutableStateFlow(CompanyListingsState())

@@ -6,11 +6,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.InputStream
 import java.io.InputStreamReader
+import javax.inject.Inject
 
 /**
  * Implements for the CSV Parser. Parses out symbol, name and exchange from csv file
  */
-class ListingsParser() : CSVParser<CompanyListing> {
+class ListingsParser @Inject constructor() : CSVParser<CompanyListing> {
 
 
     //Parser for first 3 columns to a Company Listing Object

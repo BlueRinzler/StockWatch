@@ -1,5 +1,6 @@
 package com.sambarnett.stockwatch.data.network
 
+import com.sambarnett.stockwatch.domain.model.CompanyListing
 import okhttp3.Response
 import retrofit2.http.Query
 import okhttp3.ResponseBody

@@ -9,12 +9,12 @@ import androidx.room.*
 interface StockDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCompanyListings(
+    suspend fun insertCompanyListings(
         companyListingEntities: List<CompanyListingsEntity>
     )
 
     @Query("DELETE FROM companyListingsEntity")
-    fun clearCompanyListings()
+    suspend fun clearCompanyListings()
 
     @Query(
         """
@@ -24,7 +24,7 @@ interface StockDao {
                 UPPER(:query) == symbolName
         """
     )
-    fun searchCompanyListing(query: String): List<CompanyListingsEntity>
+    suspend fun searchCompanyListing(query: String): List<CompanyListingsEntity>
 
 
 }
