@@ -5,6 +5,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 
+/**
+ * Room entity. Holds name, symbol and exchange.
+ */
 @Entity(tableName = "companyListingsEntity")
 data class CompanyListingsEntity(
     @PrimaryKey(autoGenerate = true)

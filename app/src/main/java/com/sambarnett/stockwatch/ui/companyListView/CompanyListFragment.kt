@@ -11,8 +11,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sambarnett.stockwatch.adapter.CompanyListAdapter
 import com.sambarnett.stockwatch.databinding.FragmentCompanyListBinding
+import com.sambarnett.stockwatch.util.Resource
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -36,31 +38,28 @@ class CompanyListFragment : Fragment() {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val state = viewModel.uiState
+
         val adapter = CompanyListAdapter()
 
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
+
     }
+
+}
+
 
 //    private fun initView() {
 //        val state = viewModel.uiState
 //        // Start a coroutine in the lifecycle scope
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            // repeatOnLifecycle launches the block in a new coroutine every time the
-//            // lifecycle is in the STARTED state (or above) and cancels it when it's STOPPED.
-//            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                launch {
-//                    viewModel.onEvent(CompanyListingsEvent.Refresh)
-//                }
-//            }
-//        }
-//
 //
 //    }
 
 
-}
+
+
+

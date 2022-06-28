@@ -6,8 +6,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 
-class CompanyApplication: Application() {
-
+class CompanyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -17,6 +16,7 @@ class CompanyApplication: Application() {
             modules(repoModule, viewModels, apiModule, dataBaseModule, csvParser)
         }
     }
+
 
     override fun onTerminate() {
         super.onTerminate()

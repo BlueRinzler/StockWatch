@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 
 class CompanyListingsViewModel(private val stockRepository: StockRepository) : ViewModel() {
 
+
     private val _uiState = MutableStateFlow(CompanyListingsState())
     val uiState: StateFlow<CompanyListingsState> = _uiState.asStateFlow()
 
@@ -22,6 +23,8 @@ class CompanyListingsViewModel(private val stockRepository: StockRepository) : V
         getCompanyListings()
     }
 
+
+    suspend fun getCompanies(): Flow<Resource<List<CompanyListing>>> = stockRepository.getCompanyListings(false,"")
 
     fun onEvent(event: CompanyListingsEvent) {
         when (event) {

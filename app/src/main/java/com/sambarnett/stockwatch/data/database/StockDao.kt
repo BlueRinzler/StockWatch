@@ -2,7 +2,9 @@ package com.sambarnett.stockwatch.data.database
 
 import androidx.room.*
 
-
+/**
+ * Room DAO.
+ */
 @Dao
 interface StockDao {
 
