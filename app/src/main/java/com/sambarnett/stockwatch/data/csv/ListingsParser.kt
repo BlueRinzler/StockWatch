@@ -4,9 +4,11 @@ import com.opencsv.CSVReader
 import com.sambarnett.stockwatch.domain.model.CompanyListing
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
 import javax.inject.Inject
+import kotlin.jvm.Throws
 
 /**
  * Implements for the CSV Parser. Parses out symbol, name and exchange from csv file
@@ -20,7 +22,7 @@ class ListingsParser @Inject constructor() : CSVParser<CompanyListing> {
         return withContext(Dispatchers.IO) {
             csvReader
                 .readAll()
-                    //drops headers
+                //drops headers
                 .drop(1)
                 .mapNotNull { line ->
                     val symbol = line.getOrNull(0)
@@ -32,6 +34,7 @@ class ListingsParser @Inject constructor() : CSVParser<CompanyListing> {
                         exchange = exchange ?: return@mapNotNull null
                     )
                 }
+
                 .also { csvReader.close() }
         }
     }

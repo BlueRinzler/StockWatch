@@ -35,10 +35,9 @@ class StockRepositoryImpl @Inject constructor(
                 data = localListings.map { it.toCompanyListing() }
             ))
 
-
             val isDbEmpty = localListings.isEmpty() && query.isBlank()
-            val loadFromCache = !isDbEmpty && !fetchFromRemote
-            if (loadFromCache) {
+            val shouldJustLoadFromCache = !isDbEmpty && !fetchFromRemote
+            if (shouldJustLoadFromCache) {
                 emit(Resource.Loading(false))
                 return@flow
             }
@@ -67,7 +66,7 @@ class StockRepositoryImpl @Inject constructor(
                 ))
                 emit(Resource.Loading(false))
             }
-
         }
     }
 }
+
