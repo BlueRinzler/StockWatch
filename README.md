@@ -2,7 +2,7 @@
 
 
 
-Collects stock data from [alpha vantage. ](https://www.alphavantage.co/). Displays stock data in a list format. 
+Collects stock data from [alpha vantage. ](https://www.alphavantage.co/) Displays stock data in a list format. 
 
 Built with Room, Hilt and RetroFit.
 
