@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+
+    <color name="colorPrimary">#121212</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#80D8FF</color>
+    <color name="colorWindowBackground">#121212</color>
+
+    <!-- 52 = 32%, hex to alpha -->
+    <color name="colorTransparentBlack">#52000000</color>
+    <color name="colorTransparentWhite">#52FFFFFF</color>
+
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>

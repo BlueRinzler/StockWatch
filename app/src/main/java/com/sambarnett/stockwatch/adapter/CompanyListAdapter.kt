@@ -37,7 +37,7 @@ class CompanyListAdapter :
     }
 
 
-    //Creating a holder for each data object. First name, sur name, age and weight.
+    //Creating a holder for each data object.
     class CompanyViewHolder(private var binding: CompanyListCompanyBinding) :
         RecyclerView.ViewHolder(binding.root) {
 

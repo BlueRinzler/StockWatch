@@ -27,11 +27,10 @@ class CompanyListingsViewModel @Inject constructor(private val stockRepository: 
     private var fetchJob: Job? = null
 
     init {
-        getCompanyListings()
+        getCompanyListings("", false)
     }
 
 
-    suspend fun getCompanies(): Flow<Resource<List<CompanyListing>>> = stockRepository.getCompanyListings(false,"")
 
     fun onEvent(event: CompanyListingsEvent) {
         when (event) {

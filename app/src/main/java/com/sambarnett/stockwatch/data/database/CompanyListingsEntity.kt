@@ -10,12 +10,13 @@ import androidx.room.PrimaryKey
  */
 @Entity(tableName = "companyListingsEntity")
 data class CompanyListingsEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int? = 0,
+    @PrimaryKey
+    val id: Int? = null,
     @ColumnInfo(name = "stockName")
     val name: String,
     @ColumnInfo(name = "symbolName")
     val symbol: String,
     @ColumnInfo(name = "exchangeName")
-    val exchange: String,
+    val exchange: String
+
 )

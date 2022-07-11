@@ -6,7 +6,7 @@ import com.sambarnett.stockwatch.domain.model.CompanyListing
 
 /**
  * Mapper to turn Entity to Listing and vice versa
- * Use for seperation purposesw
+ * Use for seperation purposes
  */
 fun CompanyListingsEntity.toCompanyListing(): CompanyListing {
     return CompanyListing(

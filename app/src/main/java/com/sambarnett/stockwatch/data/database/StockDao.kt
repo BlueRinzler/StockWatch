@@ -1,6 +1,7 @@
 package com.sambarnett.stockwatch.data.database
 
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 /**
  * Room DAO.
