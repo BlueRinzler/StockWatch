@@ -7,19 +7,26 @@
     android:layout_margin="10dp"
     tools:context=".ui.companyListView.CompanyListFragment">
 
+
+<androidx.appcompat.widget.SearchView
+    android:id="@+id/search_bar"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="@color/colorTransparentWhite"
+    app:layout_constraintBottom_toTopOf="@id/divider"/>
+
+
+
+
     <View
         android:id="@+id/divider"
         style="@style/Widget.Material3.MaterialDivider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@id/search_bar"/>
 
-    </View>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -31,9 +38,6 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider" />
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

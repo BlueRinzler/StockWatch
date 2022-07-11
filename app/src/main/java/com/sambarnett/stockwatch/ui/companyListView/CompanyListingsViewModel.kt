@@ -1,21 +1,17 @@
 package com.sambarnett.stockwatch.ui.companyListView
 
 
-import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sambarnett.stockwatch.domain.model.CompanyListing
 import com.sambarnett.stockwatch.domain.repository.StockRepository
 import com.sambarnett.stockwatch.util.Resource
-import dagger.hilt.android.HiltAndroidApp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import org.koin.core.KoinApplication.Companion.init
 import javax.inject.Inject
-import javax.inject.Singleton
 
 @HiltViewModel
 class CompanyListingsViewModel @Inject constructor(private val stockRepository: StockRepository) : ViewModel() {
@@ -27,25 +23,29 @@ class CompanyListingsViewModel @Inject constructor(private val stockRepository: 
     private var fetchJob: Job? = null
 
     init {
-        getCompanyListings("", false)
+        getCompanyListings()
     }
 
 
+//
+//    fun onEvent(event: CompanyListingsEvent) {
+//        when (event) {
+//            is CompanyListingsEvent.Refresh -> {
+//                getCompanyListings(fetchFromRemote = true)
+//            }
+//            is CompanyListingsEvent.OnSearchQueryChange -> {
+//                _uiState.value.copy(searchQuery = event.query)
+//                fetchJob?.cancel()
+//                fetchJob = viewModelScope.launch {
+//                    delay(500L)
+//                    getCompanyListings()
+//                }
+//            }
+//        }
+//    }
 
-    fun onEvent(event: CompanyListingsEvent) {
-        when (event) {
-            is CompanyListingsEvent.Refresh -> {
-                getCompanyListings(fetchFromRemote = true)
-            }
-            is CompanyListingsEvent.OnSearchQueryChange -> {
-                _uiState.value.copy(searchQuery = event.query)
-                fetchJob?.cancel()
-                fetchJob = viewModelScope.launch {
-                    delay(500L)
-                    getCompanyListings()
-                }
-            }
-        }
+    fun getListings(query: String) {
+        getCompanyListings(query)
     }
 
 
@@ -87,7 +87,7 @@ data class CompanyListingsState(
     val searchQuery: String = ""
 )
 
-sealed class CompanyListingsEvent {
-    object Refresh : CompanyListingsEvent()
-    data class OnSearchQueryChange(val query: String) : CompanyListingsEvent()
-}
+//sealed class CompanyListingsEvent {
+//    object Refresh : CompanyListingsEvent()
+//    data class OnSearchQueryChange(val query: String) : CompanyListingsEvent()
+//}
