@@ -2,13 +2,15 @@
 
 
 
-Collects stock data from [alpha vantage. ](https://www.alphavantage.co/). Displays list of stock data in list format. 
+Collects stock data from [alpha vantage. ](https://www.alphavantage.co/) Displays stock data in a list format. 
+
+Built with Room, Hilt and RetroFit.
 
 
 # TODO
 
-1. Ability to query differnt stocks with intra day values
-2.
+1. Ability to Query stocks
+2. Intraday value Screen
 
 
 
