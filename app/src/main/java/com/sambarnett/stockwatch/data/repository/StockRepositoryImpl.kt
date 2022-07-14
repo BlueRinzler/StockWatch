@@ -34,13 +34,15 @@ class StockRepositoryImpl @Inject constructor(
             emit(Resource.Success(
                 data = localListings.map { it.toCompanyListing() }
             ))
-
-            val isDbEmpty = localListings.isEmpty() && query.isBlank()
-            val shouldJustLoadFromCache = !isDbEmpty && !fetchFromRemote
-            if (shouldJustLoadFromCache) {
+            //check if DB is empty and if query is blank return true
+            val isDbEmpty: Boolean = localListings.isEmpty() && query.isBlank()
+            //check if both false, if true then load from cache and end function return@flow
+            val loadFromCache : Boolean = !isDbEmpty && !fetchFromRemote
+            if (loadFromCache) {
                 emit(Resource.Loading(false))
-                return@flow
+               return@flow
             }
+            //Accept listings from API and parse, if no connection, emit error and return null
             val remoteListings = try {
                 val response = api.getListings()
                 companyListingParser.parse(response.byteStream())
@@ -53,7 +55,7 @@ class StockRepositoryImpl @Inject constructor(
                 emit(Resource.Error("Couldn't load data"))
                 null
             }
-
+            //If remote listings are not null -> clear the cache and insert new listings
             remoteListings?.let { listings ->
                 stockDao.clearCompanyListings()
                 stockDao.insertCompanyListings(

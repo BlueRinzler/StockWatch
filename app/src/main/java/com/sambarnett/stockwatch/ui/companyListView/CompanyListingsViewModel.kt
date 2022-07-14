@@ -7,42 +7,23 @@ import com.sambarnett.stockwatch.domain.model.CompanyListing
 import com.sambarnett.stockwatch.domain.repository.StockRepository
 import com.sambarnett.stockwatch.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CompanyListingsViewModel @Inject constructor(private val stockRepository: StockRepository) : ViewModel() {
+class CompanyListingsViewModel @Inject constructor(private val stockRepository: StockRepository) :
+    ViewModel() {
 
 
     private val _uiState = MutableStateFlow(CompanyListingsState())
     val uiState: StateFlow<CompanyListingsState> = _uiState.asStateFlow()
 
-    private var fetchJob: Job? = null
 
     init {
         getCompanyListings()
     }
 
-
-//
-//    fun onEvent(event: CompanyListingsEvent) {
-//        when (event) {
-//            is CompanyListingsEvent.Refresh -> {
-//                getCompanyListings(fetchFromRemote = true)
-//            }
-//            is CompanyListingsEvent.OnSearchQueryChange -> {
-//                _uiState.value.copy(searchQuery = event.query)
-//                fetchJob?.cancel()
-//                fetchJob = viewModelScope.launch {
-//                    delay(500L)
-//                    getCompanyListings()
-//                }
-//            }
-//        }
-//    }
 
     fun getListings(query: String) {
         getCompanyListings(query)
@@ -82,12 +63,8 @@ class CompanyListingsViewModel @Inject constructor(private val stockRepository: 
 data class CompanyListingsState(
     val companies: List<CompanyListing> = emptyList(),
     val isLoading: Boolean = false,
-    val isSuccess: Boolean = false,
-    val isRefresh: Boolean = false,
     val searchQuery: String = ""
 )
 
-//sealed class CompanyListingsEvent {
-//    object Refresh : CompanyListingsEvent()
-//    data class OnSearchQueryChange(val query: String) : CompanyListingsEvent()
-//}
+
+
