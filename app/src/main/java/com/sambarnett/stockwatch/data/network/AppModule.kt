@@ -1,17 +1,14 @@
-package com.sambarnett.stockwatch.di
+package com.sambarnett.stockwatch.data.network
 
 import android.app.Application
 import androidx.room.Room
 import com.sambarnett.stockwatch.data.database.StockDatabase
-import com.sambarnett.stockwatch.data.network.StockAPI
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.create
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
@@ -21,15 +18,15 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit  {
-        return Retrofit.Builder()
-            .baseUrl(StockAPI.BASE_URL)
-            .addConverterFactory(MoshiConverterFactory.create())
-            .client(OkHttpClient.Builder()
-                .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC })
-                .build())
-            .build()
-    }
+    fun provideRetrofit(okHttpClient: OkHttpClient, ): Retrofit = Retrofit.Builder()
+        .baseUrl(StockAPI.BASE_URL)
+        .addConverterFactory(MoshiConverterFactory.create())
+        .client(
+            OkHttpClient.Builder().build()
+        )
+        .build()
+
+
 
     @Provides
     @Singleton

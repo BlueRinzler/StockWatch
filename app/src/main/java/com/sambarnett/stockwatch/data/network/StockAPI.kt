@@ -1,20 +1,18 @@
 package com.sambarnett.stockwatch.data.network
 
-import com.sambarnett.stockwatch.domain.model.CompanyListing
-import okhttp3.Response
 import retrofit2.http.Query
 import okhttp3.ResponseBody
 import retrofit2.http.GET
 
+const val BASE_URL = "https://www.alphavantage.co"
+
 interface StockAPI {
 
     @GET("query?function=LISTING_STATUS")
-    suspend fun getListings(
-        @Query("apikey") apiKey: String = API_KEY): ResponseBody
+    suspend fun getListings(@Query("apikey") apiKey: String = API_KEY): List<Company>
 
     companion object {
+        //dont do this
         const val API_KEY = "MB10MFAX9TKQ6H0N"
-        const val BASE_URL = "https://www.alphavantage.co"
     }
-
 }

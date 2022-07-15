@@ -15,12 +15,12 @@ import kotlin.jvm.Throws
  * Implements for the CSV Parser. Parses out symbol, name and exchange from csv file
  */
 @Singleton
-class ListingsParser @Inject constructor() : CSVParser<CompanyListing> {
+class ListingsParser @Inject constructor(
+    private val csvReader: CSVReader
+) : CSVParser<CompanyListing> {
 
-
-    override suspend fun parse(stream: InputStream): List<CompanyListing> {
-        val csvReader = CSVReader(InputStreamReader(stream))
-        return withContext(Dispatchers.IO) {
+    override suspend fun parse(stream: InputStream): List<CompanyListing> =
+        withContext(Dispatchers.IO) {
             csvReader
                 .readAll()
                 .drop(1)
@@ -34,10 +34,8 @@ class ListingsParser @Inject constructor() : CSVParser<CompanyListing> {
                         exchange = exchange ?: return@mapNotNull null
                     )
                 }
-
                 .also {
                     csvReader.close()
                 }
         }
-    }
 }

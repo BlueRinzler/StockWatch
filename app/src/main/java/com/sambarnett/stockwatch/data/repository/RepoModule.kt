@@ -1,4 +1,4 @@
-package com.sambarnett.stockwatch.di
+package com.sambarnett.stockwatch.data.repository
 
 import com.sambarnett.stockwatch.data.csv.CSVParser
 import com.sambarnett.stockwatch.data.csv.ListingsParser

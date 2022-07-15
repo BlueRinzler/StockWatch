@@ -1,4 +1,4 @@
-package com.sambarnett.stockwatch.di
+package com.sambarnett.stockwatch
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
@@ -8,7 +8,4 @@ import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 
 @HiltAndroidApp
-class CompanyApplication : Application() {
-
-
-}
+class CompanyApplication : Application()

@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-
 /**
  * Room entity. Holds name, symbol and exchange.
  */
@@ -18,5 +17,4 @@ data class CompanyListingsEntity(
     val symbol: String,
     @ColumnInfo(name = "exchangeName")
     val exchange: String
-
 )
