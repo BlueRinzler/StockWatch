@@ -38,7 +38,7 @@ class CompanyListFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentCompanyListBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -47,16 +47,23 @@ class CompanyListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initView()
+    }
 
+    override fun onStart() {
+        super.onStart()
+
+        val state = viewModel.uiState.collect {
+
+        }
     }
 
 
     private fun initView() {
 
         //Initial view to set up the adapter with the list of companies from the viewModel
-        val state = viewModel.uiState
         val adapter = CompanyListAdapter()
         binding.recyclerView.adapter = adapter
+        //move to xml
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         viewLifecycleOwner.lifecycleScope.launch {

@@ -7,7 +7,7 @@
     android:layout_margin="5dp"
     android:descendantFocusability="blocksDescendants">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/company_list_name"
         android:layout_margin="5dp"
         android:layout_width="280dp"
@@ -17,7 +17,7 @@
         app:layout_constraintBottom_toTopOf="@+id/company_symbol_name"
         tools:text="Apple" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/company_symbol_name"
         android:layout_margin="5dp"
         android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
         tools:text="AAPL" />
 
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/company_exchange_name"
         android:layout_margin="5dp"
         android:layout_width="100dp"

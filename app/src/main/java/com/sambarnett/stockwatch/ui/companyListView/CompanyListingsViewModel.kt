@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sambarnett.stockwatch.domain.model.CompanyListing
 import com.sambarnett.stockwatch.domain.repository.StockRepository
-import com.sambarnett.stockwatch.util.Resource
+import com.sambarnett.stockwatch.data.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -15,20 +15,16 @@ import javax.inject.Inject
 class CompanyListingsViewModel @Inject constructor(private val stockRepository: StockRepository) :
     ViewModel() {
 
-
     private val _uiState = MutableStateFlow(CompanyListingsState())
     val uiState: StateFlow<CompanyListingsState> = _uiState.asStateFlow()
-
 
     init {
         getCompanyListings()
     }
 
-
     fun getListings(query: String) {
         getCompanyListings(query)
     }
-
 
     private fun getCompanyListings(
         query: String = _uiState.value.searchQuery.lowercase(),
