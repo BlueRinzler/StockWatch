@@ -18,5 +18,4 @@ data class CompanyListingsEntity(
     val symbol: String,
     @ColumnInfo(name = "exchangeName")
     val exchange: String
-
 )

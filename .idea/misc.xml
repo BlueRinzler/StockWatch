@@ -6,10 +6,11 @@
         <entry key="../../../../layout/custom_preview.xml" value="0.1685185185185185" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1735" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.35572916666666665" />
-        <entry key="app/src/main/res/layout/company_list_company.xml" value="0.5" />
-        <entry key="app/src/main/res/layout/fragment_company_list.xml" value="0.15027322404371585" />
+        <entry key="app/src/main/res/layout/company_list_company.xml" value="0.29347826086956524" />
+        <entry key="app/src/main/res/layout/fragment_company_list.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_company_list_company.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_stock_details.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/menu/menu_stock.xml" value="0.18125" />
       </map>
     </option>
   </component>

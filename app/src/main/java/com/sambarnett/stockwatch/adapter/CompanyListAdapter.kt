@@ -18,7 +18,6 @@ import com.sambarnett.stockwatch.domain.model.CompanyListing
 class CompanyListAdapter :
     ListAdapter<CompanyListing, CompanyListAdapter.CompanyViewHolder>(DiffCallback) {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
             CompanyViewHolder {
         return CompanyViewHolder(
@@ -36,7 +35,6 @@ class CompanyListAdapter :
         }
     }
 
-
     //Creating a holder for each data object.
     class CompanyViewHolder(private var binding: CompanyListCompanyBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -49,12 +47,10 @@ class CompanyListAdapter :
                 companySymbolName.text = company.symbol
             }
         }
-
     }
 
     //creating DiffCallback object to be used in PersonListAdapter.
     companion object {
-
         private val DiffCallback = object : DiffUtil.ItemCallback<CompanyListing>() {
             override fun areContentsTheSame(
                 oldItem: CompanyListing,
@@ -62,7 +58,6 @@ class CompanyListAdapter :
             ): Boolean {
                 return oldItem.name == newItem.name
             }
-
             override fun areItemsTheSame(
                 oldItem: CompanyListing,
                 newItem: CompanyListing

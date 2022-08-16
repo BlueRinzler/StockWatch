@@ -1,15 +1,14 @@
 package com.sambarnett.stockwatch.domain.repository
 
 import com.sambarnett.stockwatch.domain.model.CompanyListing
-import com.sambarnett.stockwatch.util.Resource
+import com.sambarnett.stockwatch.data.Resource
 import kotlinx.coroutines.flow.Flow
 
-interface StockRepository {
+interface Repository {
 
-    suspend fun getCompanyListings(
+    suspend fun getCompanyListingsQuery(
         fetchFromRemote: Boolean,
         query: String
     ): Flow<Resource<List<CompanyListing>>>
-
 
 }

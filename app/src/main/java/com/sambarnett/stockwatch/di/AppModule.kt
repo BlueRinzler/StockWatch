@@ -2,7 +2,9 @@ package com.sambarnett.stockwatch.di
 
 import android.app.Application
 import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.sambarnett.stockwatch.data.database.StockDatabase
+import com.sambarnett.stockwatch.data.network.BASE_URL
 import com.sambarnett.stockwatch.data.network.StockAPI
 import dagger.Module
 import dagger.Provides
@@ -21,25 +23,22 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit  {
-        return Retrofit.Builder()
-            .baseUrl(StockAPI.BASE_URL)
-            .addConverterFactory(MoshiConverterFactory.create())
-            .client(OkHttpClient.Builder()
-                .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC })
-                .build())
-            .build()
-    }
+    fun provideRetrofit(): Retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(MoshiConverterFactory.create())
+        .client(
+            OkHttpClient.Builder().build()
+        )
+        .build()
+
 
     @Provides
     @Singleton
-    fun provideStockDatabase(app: Application): StockDatabase {
-        return Room.databaseBuilder(
-            app, StockDatabase::class.java,
-            "stock_database"
-        ).fallbackToDestructiveMigration()
-            .build()
-    }
+    fun provideStockDatabase(app: Application): StockDatabase = Room.databaseBuilder(
+        app, StockDatabase::class.java,
+        "stock_database"
+    ).fallbackToDestructiveMigration()
+        .build()
 
 
     @Provides

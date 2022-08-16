@@ -4,7 +4,7 @@ import com.sambarnett.stockwatch.data.csv.CSVParser
 import com.sambarnett.stockwatch.data.csv.ListingsParser
 import com.sambarnett.stockwatch.data.repository.StockRepositoryImpl
 import com.sambarnett.stockwatch.domain.model.CompanyListing
-import com.sambarnett.stockwatch.domain.repository.StockRepository
+import com.sambarnett.stockwatch.domain.repository.Repository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -22,11 +22,10 @@ abstract class RepoModule {
         listingsParser: ListingsParser
     ): CSVParser<CompanyListing>
 
-
     @Binds
     @Singleton
     abstract fun bindsStockRepo(
         stockRepositoryImpl: StockRepositoryImpl
-    ): StockRepository
+    ): Repository
 }
 

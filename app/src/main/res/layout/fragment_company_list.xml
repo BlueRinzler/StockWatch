@@ -8,14 +8,30 @@
     tools:context=".ui.companyListView.CompanyListFragment">
 
 
-<androidx.appcompat.widget.SearchView
-    android:id="@+id/search_bar"
-    android:layout_width="match_parent"
-    android:layout_height="40dp"
-    android:background="@color/colorTransparentWhite"
-    app:layout_constraintBottom_toTopOf="@id/divider"/>
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/search_bar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="40dp"-->
+<!--        app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"-->
+<!--        android:background="@color/colorTransparentWhite"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/divider">-->
+
+<!--        <com.google.android.material.textfield.TextInputEditText-->
+<!--            android:id="@+id/search_bar_edit_text"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:inputType="text"-->
+<!--            android:maxLines="1"-->
+<!--            android:forceHasOverlappingRendering="true"/>-->
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
 
 
+    <androidx.appcompat.widget.Toolbar
+        android:id = "@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background = "@color/colorTransparentWhite"
+        app:layout_constraintBottom_toTopOf="@id/divider"/>
 
 
     <View
@@ -24,13 +40,14 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="@id/search_bar"/>
+        app:layout_constraintTop_toTopOf="@id/action_bar"/>
 
 
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="vertical"

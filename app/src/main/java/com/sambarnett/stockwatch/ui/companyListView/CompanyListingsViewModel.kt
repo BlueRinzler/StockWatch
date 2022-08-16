@@ -4,15 +4,15 @@ package com.sambarnett.stockwatch.ui.companyListView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sambarnett.stockwatch.domain.model.CompanyListing
-import com.sambarnett.stockwatch.domain.repository.StockRepository
-import com.sambarnett.stockwatch.util.Resource
+import com.sambarnett.stockwatch.domain.repository.Repository
+import com.sambarnett.stockwatch.data.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CompanyListingsViewModel @Inject constructor(private val stockRepository: StockRepository) :
+class CompanyListingsViewModel @Inject constructor(private val stockRepository: Repository) :
     ViewModel() {
 
 
@@ -24,22 +24,16 @@ class CompanyListingsViewModel @Inject constructor(private val stockRepository: 
         getCompanyListings()
     }
 
-
-    fun getListings(query: String) {
-        getCompanyListings(query)
-    }
-
-
     private fun getCompanyListings(
         query: String = _uiState.value.searchQuery.lowercase(),
         fetchFromRemote: Boolean = false
     ) {
         viewModelScope.launch {
-            stockRepository.getCompanyListings(fetchFromRemote, query)
+            stockRepository.getCompanyListingsQuery(fetchFromRemote, query)
                 .collect { result ->
                     when (result) {
                         is Resource.Success -> {
-                            result.data?.let { listings ->
+                            result.data.let { listings ->
                                 _uiState.update {
                                     it.copy(companies = listings)
                                 }
@@ -47,15 +41,40 @@ class CompanyListingsViewModel @Inject constructor(private val stockRepository: 
                         }
                         is Resource.Loading -> {
                             _uiState.update {
-                                it.copy(isLoading = result.isLoading)
+                                it.copy(isLoading = true)
                             }
                         }
-                        is Resource.Error -> Unit
+                        is Resource.Error<*> -> Unit
                     }
                 }
         }
     }
 
+    fun getCompanyListingsSearch(
+        query: String = _uiState.value.searchQuery.lowercase(),
+        fetchFromRemote: Boolean = false
+    ) : Flow<List<CompanyListing>> = flow {
+        viewModelScope.launch {
+            stockRepository.getCompanyListingsQuery(fetchFromRemote, query)
+                .collect { result ->
+                    when (result) {
+                        is Resource.Success -> {
+                            result.data.let { listings ->
+                                _uiState.update {
+                                    it.copy(companies = listings)
+                                }
+                            }
+                        }
+                        is Resource.Loading -> {
+                            _uiState.update {
+                                it.copy(isLoading = true)
+                            }
+                        }
+                        is Resource.Error<*> -> Unit
+                    }
+                }
+        }
+    }
 
 }
 
