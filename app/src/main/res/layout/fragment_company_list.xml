@@ -7,32 +7,26 @@
     android:layout_margin="10dp"
     tools:context=".ui.companyListView.CompanyListFragment">
 
-
-<!--    <com.google.android.material.textfield.TextInputLayout-->
-<!--        android:id="@+id/search_bar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="40dp"-->
-<!--        app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"-->
-<!--        android:background="@color/colorTransparentWhite"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/divider">-->
-
-<!--        <com.google.android.material.textfield.TextInputEditText-->
-<!--            android:id="@+id/search_bar_edit_text"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="40dp"-->
-<!--            android:inputType="text"-->
-<!--            android:maxLines="1"-->
-<!--            android:forceHasOverlappingRendering="true"/>-->
-<!--    </com.google.android.material.textfield.TextInputLayout>-->
-
-
-    <androidx.appcompat.widget.Toolbar
-        android:id = "@+id/action_bar"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/search_bar"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background = "@color/colorTransparentWhite"
-        app:layout_constraintBottom_toTopOf="@id/divider"/>
+        android:layout_height="?actionBarSize"
+        android:background="@color/colorTransparentWhite"
+        app:cardElevation="4dp"
+        android:layout_margin="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/stockSearchView"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:lines="1"
+            android:maxLength="10"
+            android:maxLines="1" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <View
         android:id="@+id/divider"
@@ -40,9 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="@id/action_bar"/>
-
-
+        app:layout_constraintTop_toBottomOf="@id/search_bar"/>
 
 
         <androidx.recyclerview.widget.RecyclerView

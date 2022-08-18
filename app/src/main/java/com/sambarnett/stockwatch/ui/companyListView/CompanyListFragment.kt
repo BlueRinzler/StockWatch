@@ -52,8 +52,7 @@ class CompanyListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-        binding.actionBar.inflateMenu(R.menu.menu_stock)
-
+        setUpSearchBar()
     }
 
 
@@ -64,48 +63,42 @@ class CompanyListFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect {
-                    adapter.submitList(it.companies)
+                viewModel.uiState.collect { companies ->
+                    companies.let {
+                        adapter.submitList(it.companies)
+                    }
                 }
             }
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-
-        inflater.inflate(R.menu.menu_stock, menu)
-
-        val stockItem = menu.findItem(R.id.search_bar)
-        val searchView = stockItem.actionView as SearchView
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                if (query != null) {
-                    val adapter = CompanyListAdapter()
-                    binding.recyclerView.adapter = adapter
-                    binding.recyclerView.scrollToPosition(0)
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        viewModel.getCompanyListingsSearch(query).collectLatest {
-                            adapter.submitList(it)
-                        }
-                    }
-                    searchView.clearFocus()
+    private fun setUpSearchBar() {
+        binding.stockSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    viewModel.onEvent(
+                        CompanyListingEvent.OnSearchQueryChange(query = newText ?: "")
+                    )
                 }
                 return true
             }
 
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return true
-            }
-
-
+            override fun onQueryTextSubmit(query: String?): Boolean = false
         })
-
-
     }
+
+
+    override fun onDestroyView() {
+        super.onDestroy()
+        _binding = null
+    }
+
 }
+
+
+
+
+
 
 
 
