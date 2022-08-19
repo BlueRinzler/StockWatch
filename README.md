@@ -13,9 +13,7 @@ Built with Room, Hilt and RetroFit.
 2. Intraday value Screen
 
 
-
-
-[arecord.webm](https://user-images.githubusercontent.com/51298088/178378244-2bc628e8-bd10-4e85-9322-beaa69b8b364.webm)
+[record.webm](https://user-images.githubusercontent.com/51298088/185534029-92b071f7-9e12-4acb-bf55-4be0552d5838.webm)
 
 
 
