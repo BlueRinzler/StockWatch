@@ -18,8 +18,6 @@ import kotlin.jvm.Throws
 class ListingsParser @Inject constructor() :
     CSVParser<CompanyListing> {
 
-    //any time making object just put in constructor
-
     override suspend fun parse(stream: InputStream): List<CompanyListing> {
         val csvReader = CSVReader(InputStreamReader(stream))
         return withContext(Dispatchers.IO) {

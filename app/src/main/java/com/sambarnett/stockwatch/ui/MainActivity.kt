@@ -18,17 +18,15 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
+        // Retrieve NavController from the NavHostFragment within MainActivity Fragment
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
     }
-
-//        // Retrieve NavController from the NavHostFragment within MainActivity Fragment
-//        val navHostFragment = supportFragmentManager
-//            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-//        navController = navHostFragment.navController
+}
 //        // Set up the action bar for use with the NavController
 //        NavigationUI.setupActionBarWithNavController(this, navController)
 //    }
-//
 //
 //    /**
 //     * Handle navigation when the user chooses Up from the action bar.
@@ -36,4 +34,4 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 //    override fun onSupportNavigateUp(): Boolean {
 //        return navController.navigateUp() || super.onSupportNavigateUp()
 //    }
-}
+

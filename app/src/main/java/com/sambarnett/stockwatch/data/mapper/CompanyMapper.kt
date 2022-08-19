@@ -1,12 +1,13 @@
 package com.sambarnett.stockwatch.data.mapper
 
 import com.sambarnett.stockwatch.data.database.CompanyListingsEntity
+import com.sambarnett.stockwatch.data.network.dto.CompanyDetailsDto
+import com.sambarnett.stockwatch.domain.model.CompanyDetails
 import com.sambarnett.stockwatch.domain.model.CompanyListing
 
 
 /**
- * Mapper to turn Entity to Listing and vice versa
- * Use for separation purposes
+ * Extension mappers
  */
 fun CompanyListingsEntity.toCompanyListing(): CompanyListing {
     return CompanyListing(
@@ -21,5 +22,15 @@ fun CompanyListing.toCompanyListingEntity(): CompanyListingsEntity {
         name = name,
         symbol = symbol,
         exchange = exchange
+    )
+}
+
+fun CompanyDetailsDto.toCompanyDetails(): CompanyDetails {
+    return CompanyDetails(
+        symbol = symbol ?: "",
+        name = name ?: "",
+        description = description ?: "",
+        country = country ?: "",
+        sector = sector ?: "",
     )
 }

@@ -31,7 +31,6 @@ object AppModule {
         )
         .build()
 
-
     @Provides
     @Singleton
     fun provideStockDatabase(app: Application): StockDatabase = Room.databaseBuilder(
@@ -40,10 +39,8 @@ object AppModule {
     ).fallbackToDestructiveMigration()
         .build()
 
-
     @Provides
     @Singleton
     fun provideCompanyAPI(retrofit: Retrofit): StockAPI =
         retrofit.create(StockAPI::class.java)
-
 }

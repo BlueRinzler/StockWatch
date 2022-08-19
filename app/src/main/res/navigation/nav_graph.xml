@@ -9,5 +9,22 @@
         android:id="@+id/companyListFragment"
         android:name="com.sambarnett.stockwatch.ui.companyListView.CompanyListFragment"
         android:label="fragment_company_list"
-        tools:layout="@layout/fragment_company_list" />
+        tools:layout="@layout/fragment_company_list" >
+        <action
+            android:id="@+id/action_companyListFragment_to_stockDetailsFragment"
+            app:destination="@id/stockDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/stockDetailsFragment"
+        android:name="com.sambarnett.stockwatch.ui.stockview.StockDetailsFragment"
+        android:label="fragment_stock_details"
+        tools:layout="@layout/fragment_stock_details" >
+        <action
+            android:id="@+id/action_stockDetailsFragment_to_companyListFragment"
+            app:destination="@id/companyListFragment" />
+        <argument
+            android:name="symbol"
+            app:argType="string"
+            app:nullable="true"/>
+    </fragment>
 </navigation>

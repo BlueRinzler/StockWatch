@@ -1,12 +1,7 @@
 package com.sambarnett.stockwatch.data.network
 
-import android.app.Application
-import android.content.pm.ApplicationInfo
-import androidx.compose.ui.input.key.Key
 import com.sambarnett.stockwatch.BuildConfig
-import com.sambarnett.stockwatch.data.database.CompanyListingsEntity
-import com.sambarnett.stockwatch.domain.model.CompanyListing
-import okhttp3.Response
+import com.sambarnett.stockwatch.data.network.dto.CompanyDetailsDto
 import retrofit2.http.Query
 import okhttp3.ResponseBody
 import retrofit2.http.GET
@@ -21,4 +16,9 @@ interface StockAPI {
     @GET("query?function=LISTING_STATUS")
     suspend fun getListings(@Query("apikey") apiKey: String = API_KEY): ResponseBody
 
+    @GET("query?function=OVERVIEW")
+    suspend fun getCompanyDetails(
+        @Query("symbol") symbol: String,
+        @Query("apikey") apiKey: String = API_KEY
+    ): CompanyDetailsDto
 }

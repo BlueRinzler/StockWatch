@@ -8,10 +8,10 @@ import com.sambarnett.stockwatch.data.network.StockAPI
 import com.sambarnett.stockwatch.domain.model.CompanyListing
 import com.sambarnett.stockwatch.domain.repository.Repository
 import com.sambarnett.stockwatch.data.Resource
+import com.sambarnett.stockwatch.data.mapper.toCompanyDetails
+import com.sambarnett.stockwatch.domain.model.CompanyDetails
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import okio.IOException
-import retrofit2.HttpException
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.jvm.Throws
@@ -20,7 +20,7 @@ import kotlin.jvm.Throws
 class StockRepositoryImpl @Inject constructor(
     private val api: StockAPI,
     private val database: StockDatabase,
-    private val companyListingParser: CSVParser<CompanyListing>
+    private val companyListingParser: CSVParser<CompanyListing>,
 ) : Repository {
 
     private val stockDao = database.stockDao
@@ -41,7 +41,6 @@ class StockRepositoryImpl @Inject constructor(
         if (loadFromCache) {
             return@flow
         }
-
         //Accept listings from API and parse, if no connection, emit error and return null
         val remoteListings = try {
             val response = api.getListings()
@@ -63,6 +62,17 @@ class StockRepositoryImpl @Inject constructor(
         }
     }
 
+
+    override suspend fun getCompanyDetails(symbol: String): Resource<CompanyDetails> {
+        return try {
+            val result = api.getCompanyDetails(symbol)
+            Resource.Success(data = result.toCompanyDetails())
+        } catch (e: Exception) {
+            Resource.Error<Throws>(message = e.toString())
+        }
+    }
 }
+
+
 
 

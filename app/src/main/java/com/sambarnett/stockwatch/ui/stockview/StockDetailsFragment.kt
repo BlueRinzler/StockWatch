@@ -5,40 +5,72 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.sambarnett.stockwatch.R
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.navArgs
+import com.sambarnett.stockwatch.databinding.FragmentStockDetailsBinding
+import com.sambarnett.stockwatch.domain.model.CompanyDetails
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class StockDetailsFragment : Fragment() {
 
-//
-//
-//
-//    override fun onCreateView(
-//        inflater: LayoutInflater, container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View? {
-//        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_stock_details, container, false)
-//    }
-//
-//    companion object {
-//        /**
-//         * Use this factory method to create a new instance of
-//         * this fragment using the provided parameters.
-//         *
-//         * @param param1 Parameter 1.
-//         * @param param2 Parameter 2.
-//         * @return A new instance of fragment stockDetailsFragment.
-//         */
-//        // TODO: Rename and change types and number of parameters
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            StockDetailsFragment().apply {
-//                arguments = Bundle().apply {
-//                    putString(ARG_PARAM1, param1)
-//                    putString(ARG_PARAM2, param2)
-//                }
-//            }
-//    }
-//}
+    private val navigationArgs: StockDetailsFragmentArgs by navArgs()
+
+    private var _binding: FragmentStockDetailsBinding? = null
+    private val binding get() = _binding!!
+
+    private val viewModel: StockDetailsViewModel by viewModels()
+    lateinit var company: CompanyDetails
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentStockDetailsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val id = navigationArgs.symbol
+
+
+        //needs work, wont inflate
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    state?.let {
+                        binding.root.isVisible = !it.isLoading
+                        bind(company)
+                    }
+                }
+            }
+        }
+    }
+
+
+    private fun bind(company: CompanyDetails) {
+        binding.apply {
+            binding.companyName.text = company.name
+            binding.companySymbol.text = company.symbol
+            binding.companyCountry.text = company.country
+            binding.companySector.text = company.sector
+            binding.companyDescription.text = company.description
+        }
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+
 }

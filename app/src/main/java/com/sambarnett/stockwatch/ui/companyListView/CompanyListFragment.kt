@@ -10,35 +10,34 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sambarnett.stockwatch.R
 import com.sambarnett.stockwatch.adapter.CompanyListAdapter
 import com.sambarnett.stockwatch.databinding.FragmentCompanyListBinding
+import com.sambarnett.stockwatch.domain.model.CompanyListing
 
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.text.FieldPosition
 
 
 /**
  * This is the first fragment displaying company details for all companies in the database.
  */
 
-
 @AndroidEntryPoint
 class CompanyListFragment : Fragment() {
+
 
     private var _binding: FragmentCompanyListBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: CompanyListingsViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,7 +57,11 @@ class CompanyListFragment : Fragment() {
 
     private fun initView() {
         //Initial view to set up the adapter with the list of companies from the viewModel
-        val adapter = CompanyListAdapter()
+        val adapter = CompanyListAdapter {
+            val action =
+                CompanyListFragmentDirections.actionCompanyListFragmentToStockDetailsFragment(it.symbol)
+            this.findNavController().navigate(action)
+        }
         binding.recyclerView.adapter = adapter
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -77,7 +80,7 @@ class CompanyListFragment : Fragment() {
             override fun onQueryTextChange(newText: String?): Boolean {
                 newText?.let {
                     viewModel.onEvent(
-                        CompanyListingEvent.OnSearchQueryChange(query = newText ?: "")
+                        CompanyListingEvent.OnSearchQueryChange(query = newText)
                     )
                 }
                 return true
