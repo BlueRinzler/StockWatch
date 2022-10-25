@@ -12,6 +12,7 @@ import com.sambarnett.stockwatch.data.mapper.toCompanyDetails
 import com.sambarnett.stockwatch.domain.model.CompanyDetails
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import retrofit2.HttpException
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.jvm.Throws
@@ -45,10 +46,14 @@ class StockRepositoryImpl @Inject constructor(
         val remoteListings = try {
             val response = api.getListings()
             companyListingParser.parse(response.byteStream())
-        } catch (e: Exception) {
-            emit(Resource.Error<Throws>(message = e.toString()))
+        } catch (e: HttpException) {
+            emit(Resource.Error(message = e.toString()))
+            null
+        } catch (e: Throwable) {
+            emit(Resource.Exception(e))
             null
         }
+
         remoteListings?.let { listings ->
             stockDao.clearCompanyListings()
             stockDao.insertCompanyListings(
@@ -62,13 +67,14 @@ class StockRepositoryImpl @Inject constructor(
         }
     }
 
-
     override suspend fun getCompanyDetails(symbol: String): Resource<CompanyDetails> {
         return try {
             val result = api.getCompanyDetails(symbol)
             Resource.Success(data = result.toCompanyDetails())
+        } catch (e: HttpException) {
+            Resource.Error(message = e.toString())
         } catch (e: Exception) {
-            Resource.Error<Throws>(message = e.toString())
+            Resource.Exception(e)
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.sambarnett.stockwatch.domain.model
 
-import com.squareup.moshi.Json
 
 data class CompanyDetails(
     val symbol: String,

@@ -54,12 +54,8 @@ class CompanyListingsViewModel @Inject constructor(private val stockRepository: 
                                 }
                             }
                         }
-                        is Resource.Loading -> {
-                            _uiState.update {
-                                it.copy(isLoading = true)
-                            }
-                        }
-                        is Resource.Error<*> -> Unit
+                        is Resource.Error -> Unit
+                        is Resource.Exception -> Unit
                     }
                 }
         }
@@ -69,7 +65,6 @@ class CompanyListingsViewModel @Inject constructor(private val stockRepository: 
 
 data class CompanyListingsState(
     val companies: List<CompanyListing> = emptyList(),
-    val isLoading: Boolean = false,
     val searchQuery: String = ""
 )
 

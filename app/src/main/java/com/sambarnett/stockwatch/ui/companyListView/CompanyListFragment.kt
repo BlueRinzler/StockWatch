@@ -85,11 +85,9 @@ class CompanyListFragment : Fragment() {
                 }
                 return true
             }
-
             override fun onQueryTextSubmit(query: String?): Boolean = false
         })
     }
-
 
     override fun onDestroyView() {
         super.onDestroy()

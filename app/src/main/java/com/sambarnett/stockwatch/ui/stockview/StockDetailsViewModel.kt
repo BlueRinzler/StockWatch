@@ -1,9 +1,12 @@
 package com.sambarnett.stockwatch.ui.stockview
 
+import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sambarnett.stockwatch.R
 import com.sambarnett.stockwatch.data.Resource
+import com.sambarnett.stockwatch.databinding.FragmentStockDetailsBinding
 import com.sambarnett.stockwatch.domain.model.CompanyDetails
 import com.sambarnett.stockwatch.domain.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,8 +28,7 @@ class StockDetailsViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val symbol = savedStateHandle.get<String>("symbol") ?: return@launch
-            val companyDetailsResult =  stockRepository.getCompanyDetails(symbol)
-            when (companyDetailsResult) {
+            when (val companyDetailsResult = stockRepository.getCompanyDetails(symbol)) {
                 is Resource.Success -> {
                     companyDetailsResult.data.let { companyDetails ->
                         _uiState.update {
@@ -41,8 +43,7 @@ class StockDetailsViewModel @Inject constructor(
 }
 
 
-
 data class StockDetailsState(
     val stockDetails: CompanyDetails? = null,
-    val isLoading: Boolean = false
+    val error: String? = null
 )

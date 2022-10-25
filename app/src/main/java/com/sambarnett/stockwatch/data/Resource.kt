@@ -1,7 +1,7 @@
 package com.sambarnett.stockwatch.data
 
-sealed class Resource<out T: Any> {
+sealed class Resource<T: Any> {
     class Success<T : Any>(val data: T): Resource<T>()
-    class Error<T>(val message: String): Resource<Nothing>()
-    object Loading: Resource<Nothing>()
+    class Error<T: Any>(val message: String?): Resource<T>()
+    class Exception<T: Any>(val e: Throwable): Resource<T>()
 }
