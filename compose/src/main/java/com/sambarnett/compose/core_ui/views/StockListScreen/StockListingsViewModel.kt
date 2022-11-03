@@ -11,6 +11,8 @@ import com.sambarnett.compose.domain.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.StateFlow
+
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,7 +20,9 @@ import javax.inject.Inject
 class StockListingsViewModel @Inject constructor(private val stockRepository: Repository) :
     ViewModel() {
 
-    var state by mutableStateOf(CompanyListingsState())
+    var uiState by mutableStateOf(CompanyListingsState())
+        private set
+
     private var searchStock: Job? = null
 
     init {
@@ -29,7 +33,7 @@ class StockListingsViewModel @Inject constructor(private val stockRepository: Re
         when (event) {
             is CompanyListingEvent.OnSearchQueryChange -> {
                 val searchQuery = event.query.lowercase()
-                state = state.copy(searchQuery = searchQuery)
+                uiState = uiState.copy(searchQuery = searchQuery)
                 searchStock?.cancel()
                 searchStock = viewModelScope.launch {
                     delay(500)
@@ -40,7 +44,7 @@ class StockListingsViewModel @Inject constructor(private val stockRepository: Re
     }
 
     private fun getCompanyListings(
-        query: String = state.searchQuery.lowercase(),
+        query: String = uiState.searchQuery.lowercase(),
         fetchFromRemote: Boolean = false
     ) {
         viewModelScope.launch {
@@ -49,11 +53,12 @@ class StockListingsViewModel @Inject constructor(private val stockRepository: Re
                     when (result) {
                         is Resource.Success -> {
                             result.data.let { listings ->
-                                state = state.copy(
+                                uiState = uiState.copy(
                                     companies = listings
                                 )
                             }
                         }
+
                         is Resource.Error -> Unit
                         is Resource.Exception -> Unit
                     }

@@ -1,6 +1,5 @@
 package com.sambarnett.compose.core_ui.views.StockListScreen
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,10 +18,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StockListScreen(
-    viewModel: StockListingsViewModel = hiltViewModel(),
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: StockListingsViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state
+    val state = viewModel.uiState
     Column(modifier = modifier.fillMaxSize()) {
         OutlinedTextField(
             value = state.searchQuery,
@@ -38,10 +37,13 @@ fun StockListScreen(
             maxLines = 1,
             singleLine = true
         )
-        LazyColumn(modifier = modifier.fillMaxSize()) {
+        LazyColumn(
+            modifier = modifier.fillMaxSize(),
+        ) {
             items(state.companies) {
                 CompanyItem(
                     company = it,
+                    onClick = { it -> it },
                     modifier = modifier
                         .fillMaxWidth()
                         .padding(16.dp)

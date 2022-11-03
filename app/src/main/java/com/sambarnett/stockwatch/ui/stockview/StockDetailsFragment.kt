@@ -42,14 +42,14 @@ class StockDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val id = navigationArgs.symbol
-        //needs work, wont inflate
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.getStonks(id!!).let { company ->
-                    companyDetails = company
-                    bind(companyDetails)
-                }
-            }
+        /*        //needs work, wont inflate
+                viewLifecycleOwner.lifecycleScope.launch {
+                    viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        viewModel.getStonks(id!!).let { company ->
+                            companyDetails = company
+                            bind(companyDetails)
+                        }
+                    }*/
 
 
 //                viewModel.uiState.collect() { company ->
@@ -58,7 +58,6 @@ class StockDetailsFragment : Fragment() {
 //                    }
 //                }
 //            }
-        }
     }
 
 

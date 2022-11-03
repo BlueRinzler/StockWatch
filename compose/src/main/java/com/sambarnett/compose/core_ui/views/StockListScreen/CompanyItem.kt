@@ -22,6 +22,7 @@ import com.sambarnett.compose.domain.model.CompanyListing
 @Composable
 fun CompanyItem(
     company: CompanyListing,
+    onClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
